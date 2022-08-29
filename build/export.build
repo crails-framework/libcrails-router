@@ -1,0 +1,6 @@
+$out_root/
+{
+  include libcrails-router/
+}
+
+export $out_root/libcrails-router/$import.target

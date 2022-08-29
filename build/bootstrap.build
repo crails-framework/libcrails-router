@@ -1,0 +1,7 @@
+project = libcrails-router
+
+using version
+using config
+using test
+using install
+using dist

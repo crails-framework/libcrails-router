@@ -1,0 +1,39 @@
+lib{crails-router}: {hxx ixx txx cxx}{**} $impl_libs $intf_libs
+
+hxx{export}@./: cxx.importable = false
+
+# Build options.
+#
+cxx.poptions =+ "-I$out_root" "-I$src_root"
+
+{hbmia obja}{*}: cxx.poptions += -DLIBCRAILS_ROUTER_STATIC_BUILD
+{hbmis objs}{*}: cxx.poptions += -DLIBCRAILS_ROUTER_SHARED_BUILD
+
+# Export options.
+#
+lib{crails-router}:
+{
+  cxx.export.poptions = "-I$out_root/libcrails-router/" "-I$src_root/libcrails-router/"
+  cxx.export.libs = $intf_libs
+}
+
+liba{crails-router}: cxx.export.poptions += -DLIBCRAILS_ROUTER_STATIC
+libs{crails-router}: cxx.export.poptions += -DLIBCRAILS_ROUTER_SHARED
+
+# For pre-releases use the complete version to make sure they cannot be used
+# in place of another pre-release or the final version. See the version module
+# for details on the version.* variable values.
+#
+if $version.pre_release
+  lib{crails-router}: bin.lib.version = "-$version.project_id"
+else
+  lib{crails-router}: bin.lib.version = "-$version.major.$version.minor"
+
+# Install into the libcrails-router/ subdirectory of, say, /usr/include/
+# recreating subdirectories.
+#
+{hxx ixx txx}{*}:
+{
+  install         = include/
+  install.subdirs = true
+}
