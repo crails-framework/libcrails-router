@@ -68,7 +68,7 @@ namespace Crails
       return *this;
     }
 
-    void      scope(const std::string& path, std::function<void()> callback)
+    void scope(const std::string& path, std::function<void()> callback)
     {
       const auto backup = current_scope;
 
@@ -78,7 +78,7 @@ namespace Crails
     }
 
   private:
-    void      item_initialize_regex(Item& item, const std::string& route)
+    void item_initialize_regex(Item& item, const std::string& route)
     {
       using namespace std;
       regex find_params(':' + std::string(ROUTER_PARAM_PATTERN), regex_constants::ECMAScript);
