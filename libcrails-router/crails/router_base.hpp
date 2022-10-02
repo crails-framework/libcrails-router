@@ -22,6 +22,7 @@ namespace Crails
       std::string              method;
       std::regex               regexp;
       std::vector<std::string> param_names;
+      std::string              description;
     };
 
     typedef std::vector<Item> Items;
@@ -62,8 +63,9 @@ namespace Crails
       Item item;
 
       item_initialize_regex(item, '^' + full_route(route) + '$');
-      item.method = method;
-      item.run    = callback;
+      item.method      = method;
+      item.run         = callback;
+      item.description = full_route(route);
       routes.push_back(item);
       return *this;
     }
@@ -75,6 +77,14 @@ namespace Crails
       current_scope = path;
       callback();
       current_scope = backup;
+    }
+
+    std::string description() const
+    {
+      std::string result;
+      for (const Item& item : routes)
+        result += item.method + ' ' + item.description + '\n';
+      return result;
     }
 
   private:
