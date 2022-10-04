@@ -111,7 +111,7 @@ namespace Crails
 
     std::string full_route(const std::string& path) const
     {
-      return remove_duplicate_characters(current_scope + '/' + path, '/');
+      return remove_duplicate_characters(current_scope + '/' + path + "/?", '/');
     }
 
     std::string current_scope;
