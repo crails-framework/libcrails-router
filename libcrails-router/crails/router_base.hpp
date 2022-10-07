@@ -83,7 +83,7 @@ namespace Crails
     {
       std::string result;
       for (const Item& item : routes)
-        result += item.method + ' ' + item.description + '\n';
+        result += item.method + '\t' + item.description + '\n';
       return result;
     }
 
