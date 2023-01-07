@@ -27,6 +27,11 @@ namespace Crails
 
     typedef std::vector<Item> Items;
 
+    const Action* get_action(const std::string& uri, PARAMS& query_params) const
+    {
+      return get_action(std::string(), uri, query_params);
+    }
+
     const Action* get_action(const std::string& method, const std::string& uri, PARAMS& query_params) const
     {
       using namespace std;
@@ -74,10 +79,12 @@ namespace Crails
     {
       const auto backup = current_scope;
 
-      current_scope = path;
+      current_scope = current_scope + '/' + path;
       callback();
       current_scope = backup;
     }
+
+    std::string get_current_scope() const { return remove_duplicate_characters(current_scope, '/'); }
 
     std::string description() const
     {
