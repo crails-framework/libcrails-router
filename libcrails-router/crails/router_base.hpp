@@ -59,7 +59,7 @@ namespace Crails
 
     RouterBase& match(const std::string& route, Action callback)
     {
-      match("", full_route(route), callback);
+      match("", route, callback);
       return *this;
     }
 

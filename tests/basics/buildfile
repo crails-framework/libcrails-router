@@ -1,0 +1,5 @@
+import libs += libcrails-router%lib{crails-router}
+import libs += libcrails-semantics%lib{crails-semantics}
+
+exe{driver}: {hxx ixx txx cxx}{**} $libs testscript{**}
+
