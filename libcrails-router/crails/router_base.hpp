@@ -2,6 +2,7 @@
 # define ROUTER_BASE_HPP
 
 # include <functional>
+# include <algorithm>
 # include <vector>
 # include <string>
 # include <regex>
@@ -23,6 +24,8 @@ namespace Crails
       std::regex               regexp;
       std::vector<std::string> param_names;
       std::string              description;
+      short                    priority = 0;
+      bool operator<(const Item& item) const { return priority < item.priority; }
     };
 
     typedef std::vector<Item> Items;
@@ -59,11 +62,15 @@ namespace Crails
 
     RouterBase& match(const std::string& route, Action callback)
     {
-      match("", route, callback);
-      return *this;
+      return match("", route, callback);
     }
 
     RouterBase& match(const std::string& method, const std::string& route, Action callback)
+    {
+      return match(++incremental_order, method, route, callback);
+    }
+
+    RouterBase& match(short priority, const std::string& method, const std::string& route, Action callback)
     {
       Item item;
 
@@ -71,7 +78,9 @@ namespace Crails
       item.method      = method;
       item.run         = callback;
       item.description = full_route(route);
+      item.priority    = priority;
       routes.push_back(item);
+      std::sort(routes.begin(), routes.end());
       return *this;
     }
 
@@ -90,7 +99,7 @@ namespace Crails
     {
       std::string result;
       for (const Item& item : routes)
-        result += item.method + '\t' + item.description + '\n';
+        result += std::to_string(item.priority) + '\t' + item.method + '\t' + item.description + '\n';
       return result;
     }
 
@@ -124,6 +133,7 @@ namespace Crails
     std::string current_scope;
   public:
     Items routes;
+    short incremental_order = 0;
   };
 }
 
