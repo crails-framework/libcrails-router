@@ -7,7 +7,7 @@
 # include <string>
 # include <regex>
 # include <crails/utils/string.hpp>
-# define ROUTER_PARAM_PATTERN "[a-zA-Z0-9:_%&$@#+*';.,!=()-]*"
+# define ROUTER_PARAM_PATTERN "[a-zA-Z0-9:_~%&$@#+*';.,!=()-]*"
 
 namespace Crails
 {
